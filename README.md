@@ -27,6 +27,6 @@ Cette application permet de gérer des formations et les inscriptions des étudi
 ## Technologies Utilisées
 - Backend : Spring Boot (MVC)
 - Frontend : Thymeleaf
-- Base de Données : MySQL ou autre SGBD compatible
+- Base de Données : MySQL 
 - IDE : IntelliJ
 
