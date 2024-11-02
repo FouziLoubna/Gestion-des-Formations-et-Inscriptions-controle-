@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajouter une Formation</title>
+</head>
+<body>
+<h1>Ajouter une Formation</h1>
+
+<form th:action="@{/formations/add}" th:object="${formation}" method="post">
+  <label for="nom">Nom :</label>
+  <input type="text" th:field="*{nom}" id="nom" required/>
+  <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}">Erreur sur le nom</span>
+
+  <label for="duree">Durée :</label>
+  <input type="text" th:field="*{duree}" id="duree" required/>
+  <span th:if="${#fields.hasErrors('duree')}" th:errors="*{duree}">Erreur sur la durée</span>
+
+  <label for="description">Description :</label>
+  <textarea th:field="*{description}" id="description" required></textarea>
+  <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Erreur sur la description</span>
+
+  <input type="submit" value="Ajouter la Formation"/>
+</form>
+
+<p><a th:href="@{/formations}">Retour à la liste des formations</a></p>
+</body>
+</html>

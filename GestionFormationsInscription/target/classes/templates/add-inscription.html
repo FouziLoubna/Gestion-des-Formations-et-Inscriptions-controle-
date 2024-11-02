@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une Inscription</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="date"],
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ajouté pour inclure padding dans la largeur */
+        }
+        input[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
+        span {
+            color: red;
+            font-size: 0.9em;
+        }
+        p a {
+            color: #5bc0de;
+            text-decoration: none;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Ajouter une Inscription</h1>
+
+<form th:action="@{/inscriptions/add}" th:object="${inscription}" method="post">
+
+    <!-- Champ de date de l'inscription -->
+    <label for="date">Date :</label>
+    <input type="date" th:field="*{date}" id="date" required placeholder="yyyy-MM-dd"/>
+    <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Erreur sur la date</span>
+
+    <!-- Sélection de la formation -->
+    <label for="formation">Formation :</label>
+    <select id="formation" th:field="*{formation.id}" required>
+        <option value="" disabled selected>Sélectionnez une formation</option>
+        <option th:each="formation : ${formations}" th:value="${formation.id}" th:text="${formation.nom}"></option>
+    </select>
+    <span th:if="${#fields.hasErrors('formation')}" th:errors="*{formation}">Erreur sur la formation</span>
+
+    <!-- Champ pour l'étudiant -->
+    <label for="etudiant">Étudiant :</label>
+    <input type="text" th:field="*{etudiant}" id="etudiant" required placeholder="Nom de l'étudiant"/>
+    <span th:if="${#fields.hasErrors('etudiant')}" th:errors="*{etudiant}">Erreur sur l'étudiant</span>
+
+    <!-- Bouton de soumission -->
+    <input type="submit" value="Ajouter Inscription"/>
+</form>
+
+<!-- Lien de retour à la liste des inscriptions -->
+<p><a href="/">Retour au page d'accueil </a></p>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', function(event) {
+            const dateInput = document.getElementById('date');
+            const etudiantInput = document.getElementById('etudiant');
+            const formationSelect = document.getElementById('formation');
+
+            // Vérification simple des champs requis
+            if (!dateInput.value) {
+                alert("Veuillez entrer une date.");
+                event.preventDefault(); // Empêche l'envoi du formulaire
+                dateInput.focus();
+            } else if (!formationSelect.value) {
+                alert("Veuillez sélectionner une formation.");
+                event.preventDefault();
+                formationSelect.focus();
+            } else if (!etudiantInput.value) {
+                alert("Veuillez entrer le nom de l'étudiant.");
+                event.preventDefault();
+                etudiantInput.focus();
+            }
+        });
+    });
+</script>
+</body>
+</html>

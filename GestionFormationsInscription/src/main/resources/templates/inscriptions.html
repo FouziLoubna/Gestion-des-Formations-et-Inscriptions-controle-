@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Inscriptions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px; /* Espacement entre les boutons */
+        }
+        p a {
+            color: #5bc0de;
+            text-decoration: none;
+        }
+        p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<h1>Liste des Inscriptions pour la Formation : <span th:text="${formation.nom}"></span></h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Étudiant</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="inscription : ${inscriptions}">
+        <td th:text="${#dates.format(inscription.date, 'dd/MM/yyyy')}"></td>
+        <td th:text="${inscription.etudiant}"></td>
+        <td class="action-buttons">
+            <a th:href="@{/inscriptions/edit/{id}(id=${inscription.id})}">Modifier</a>
+            <a th:href="@{/inscriptions/delete/{id}(id=${inscription.id})}"
+               onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?');">Supprimer</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p><a th:href="@{/inscriptions/new/{formationId}(formationId=${formation.id})}">Ajouter une nouvelle inscription</a></p>
+<p><a href="/formations">Retour à la liste des formations</a></p>
+
+<script>
+    // Aucune logique JavaScript supplémentaire n'est requise pour cette page,
+    // mais vous pouvez ajouter des fonctionnalités interactives si nécessaire.
+    // Par exemple, vous pouvez gérer des événements de clic ou des confirmations.
+
+    // Exemple de confirmation avant la suppression
+    document.querySelectorAll('a[href*="/delete"]').forEach(link => {
+        link.addEventListener('click', function(event) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer cette inscription ?')) {
+                event.preventDefault(); // Empêche la navigation si l'utilisateur annule
+            }
+        });
+    });
+</script>
+</body>
+</html>

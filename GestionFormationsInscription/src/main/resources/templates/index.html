@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Accueil - Gestion des Formations et Inscriptions</title>
+  <style>
+    /* Style de base */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #4CAF50, #00695c);
+      color: #fff;
+    }
+
+    /* Conteneur principal */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+    }
+
+    /* Barre de navigation */
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: #fff;
+      color: #4CAF50;
+    }
+
+    /* Bouton pour ajouter une inscription */
+    .button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 25px;
+      background-color: #ff5722;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .button:hover {
+      background-color: #e64a19;
+      transform: scale(1.05);
+    }
+
+    /* Animation au chargement */
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease-in forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container fade-in">
+  <h1>Bienvenue dans le Système de Gestion des Formations et Inscriptions</h1>
+
+  <!-- Barre de navigation -->
+  <nav>
+    <ul>
+      <li><a href="/formations">Liste des Formations</a></li>
+    </ul>
+  </nav>
+
+  <!-- Bouton pour ajouter une inscription -->
+  <p>
+    <a href="/inscriptions/new" class="button">Ajouter une Inscription</a>
+  </p>
+</div>
+
+<script>
+  // Fonction pour ajouter une animation au défilement
+  window.addEventListener('scroll', function() {
+    const container = document.querySelector('.container');
+    if (window.scrollY > 50) {
+      container.style.transform = 'scale(1.05)';
+      container.style.transition = 'transform 0.3s ease';
+    } else {
+      container.style.transform = 'scale(1)';
+    }
+  });
+</script>
+</body>
+</html>

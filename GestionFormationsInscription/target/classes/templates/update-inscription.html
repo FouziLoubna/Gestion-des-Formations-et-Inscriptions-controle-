@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier l'Inscription</title>
+</head>
+<body>
+<h1>Modifier l'Inscription</h1>
+
+<form th:action="@{/inscriptions/update/{id}(id=${inscription.id})}" th:object="${inscription}" method="post">
+    <label for="date">Date</label>
+    <input type="date" th:field="*{date}" id="date" required/>
+    <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"></span>
+
+    <label for="formation">Formation</label>
+    <select id="formation" th:field="*{formation}" required>
+        <option th:each="formation : ${formations}" th:value="${formation.id}" th:text="${formation.nom}"></option>
+    </select>
+    <span th:if="${#fields.hasErrors('formation')}" th:errors="*{formation}"></span>
+
+    <label for="etudiant">Étudiant</label>
+    <input type="text" th:field="*{etudiant}" id="etudiant" placeholder="Nom de l'étudiant" required/>
+    <span th:if="${#fields.hasErrors('etudiant')}" th:errors="*{etudiant}"></span>
+
+    <input type="submit" value="Mettre à jour l'Inscription"/>
+</form>
+
+<p><a th:href="@{/inscriptions/{formationId}(formationId=${inscription.formation.id})}">Retour à la liste des inscriptions</a></p>
+
+</body>
+</html>

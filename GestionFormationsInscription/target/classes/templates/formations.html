@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Formations</title>
+    <style>
+        /* Style général */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        /* Table des formations */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Liens d'actions */
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Barre de recherche */
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-container input[type="text"] {
+            padding: 8px;
+            width: 60%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .search-container button {
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Boutons d'ajout et retour */
+        .add-formation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .add-formation a {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+            display: inline-block;
+            width: auto;
+        }
+
+        .add-formation a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<h1>Liste des Formations</h1>
+
+<!-- Barre de recherche -->
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Rechercher une formation...">
+    <button onclick="filterFormations()">Rechercher</button>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>Durée</th>
+        <th>Description</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody id="formationsTable">
+    <tr th:each="formation : ${formations}">
+        <td th:text="${formation.nom}"></td>
+        <td th:text="${formation.duree}"></td>
+        <td th:text="${formation.description}"></td>
+        <td>
+            <a th:href="@{/formations/edit/{id}(id=${formation.id})}">Modifier</a>
+            <a th:href="@{/formations/delete/{id}(id=${formation.id})}">Supprimer</a>
+            <a th:href="@{/inscriptions/new/{formationId}(formationId=${formation.id})}">Inscrire</a>
+            <a th:href="@{/inscriptions/{formationId}(formationId=${formation.id})}">Voir Détails</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="add-formation">
+    <a href="/formations/new">Ajouter une nouvelle formation</a>
+    <a href="/">Retour à la page d'accueil</a>
+</div>
+
+<script>
+    // Fonction de filtre pour la recherche
+    function filterFormations() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let table = document.getElementById("formationsTable");
+        let rows = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+            let cells = rows[i].getElementsByTagName("td");
+            let found = false;
+            for (let j = 0; j < cells.length - 1; j++) { // Ignore la dernière colonne "Actions"
+                if (cells[j].textContent.toLowerCase().includes(input)) {
+                    found = true;
+                    break;
+                }
+            }
+            rows[i].style.display = found ? "" : "none";
+        }
+    }
+</script>
+</body>
+</html>
